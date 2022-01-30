@@ -1,19 +1,5 @@
 import "./App.css";
-
-const filterOptions = [
-    {
-        label: "Angular",
-        iconSrc: "/angular-icon.png",
-    },
-    {
-        label: "ReactJS",
-        iconSrc: "/react-icon.png",
-    },
-    {
-        label: "VueJS",
-        iconSrc: "/vue-icon.png",
-    },
-];
+import { filterOptions } from "./constants/filter";
 
 function App() {
     return (
