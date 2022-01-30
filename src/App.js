@@ -1,5 +1,5 @@
 import "./App.css";
-import { filterOptions } from "./constants/filter";
+import FilterSelect from "./components/filter-select/filter-select";
 
 function App() {
     return (
@@ -15,27 +15,8 @@ function App() {
                     </p>
                     <p className="app__tab app__tab-right">My faves</p>
                 </div>
-
-                <div className="dropdown-list-container">
-                    <div className="dropdown-selected-opt">
-                        Select your news
-                        <div className="arrow-down"></div>
-                    </div>
-                    <ul className="dropdown-list">
-                        {filterOptions.map((option) => (
-                            <li key={Math.random()} className="dropdown-item">
-                                <img
-                                    className="dropdown-item-img"
-                                    src={option.iconSrc}
-                                    alt={option.label + " icon"}
-                                />
-                                <p className="dropdown-item-label">
-                                    {option.label}
-                                </p>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                
+                <FilterSelect />
 
                 <section className="cards-container">
                     <article className="news-card">
