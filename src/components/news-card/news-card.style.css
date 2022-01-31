@@ -4,10 +4,12 @@
     background-color: #fff;
     display: flex;
     align-items: stretch;
+    transition: background-color 80ms ease-in-out;
 }
 
 .news-card:hover {
     cursor: pointer;
+    background-color: rgba(96, 96, 96, 0.03);
 }
 
 .card-left-side {
