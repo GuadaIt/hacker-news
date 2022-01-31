@@ -1,5 +1,6 @@
 import "./App.css";
 import FilterSelect from "./components/filter-select/filter-select";
+import NewsCard from "./components/news-card/news-card";
 
 function App() {
     return (
@@ -19,53 +20,10 @@ function App() {
                 <FilterSelect />
 
                 <section className="cards-container">
-                    <article className="news-card">
-                        <div className="card-left-side">
-                            <div className="card-caption">
-                                <img
-                                    src="/icon-time.svg"
-                                    alt="clock icon"
-                                    width="15px"
-                                />
-                                <p>4 hours ago by author</p>
-                            </div>
-                            <p className="card-desc">
-                                Event-driven state management in React using
-                                Storeon
-                            </p>
-                        </div>
-                        <div className="card-right-side">
-                            <img
-                                src="/icon-notfavorite.svg"
-                                alt="clock icon"
-                                width="15px"
-                            />
-                        </div>
-                    </article>
-
-                    <article className="news-card">
-                        <div className="card-left-side">
-                            <div className="card-caption">
-                                <img
-                                    src="/icon-time.svg"
-                                    alt="clock icon"
-                                    width="15px"
-                                />
-                                <p>4 hours ago by author</p>
-                            </div>
-                            <p className="card-desc">
-                                Event-driven state management in React using
-                                Storeon
-                            </p>
-                        </div>
-                        <div className="card-right-side">
-                            <img
-                                src="/icon-favorite.svg"
-                                alt="clock icon"
-                                width="15px"
-                            />
-                        </div>
-                    </article>
+                    <NewsCard />
+                    <NewsCard />
+                    <NewsCard />
+                    <NewsCard />
                 </section>
             </main>
         </div>
