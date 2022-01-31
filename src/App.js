@@ -1,8 +1,13 @@
 import "./App.css";
+import { useState } from "react";
 import FilterSelect from "./components/filter-select/filter-select";
 import NewsCard from "./components/news-card/news-card";
 
-function App() {
+const App = () => {
+    const [selectedFilter, setSelectedFilter] = useState(null);
+
+    const handleSelect = (opt) => setSelectedFilter(opt);
+
     return (
         <div className="app">
             <header className="app__header">
@@ -17,7 +22,7 @@ function App() {
                     <p className="app__tab app__tab-right">My faves</p>
                 </div>
                 
-                <FilterSelect />
+                <FilterSelect filter={selectedFilter} onselect={handleSelect} />
 
                 <section className="cards-container">
                     <NewsCard />
