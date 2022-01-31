@@ -3,13 +3,17 @@ import { useEffect, useState } from "react";
 import FilterSelect from "./components/filter-select/filter-select";
 import NewsCard from "./components/news-card/news-card";
 import { cleanPostsData } from "./utils/clean-post-data";
+import { BASE_URL } from "./constants/config";
 
 const App = () => {
     const [selectedFilter, setSelectedFilter] = useState(null);
     const [activeTab, setActiveTab] = useState(1);
     const [posts, setPosts] = useState(null);
 
-    const handleSelect = (opt) => setSelectedFilter(opt);
+    const handleSelect = (opt) => {
+        setSelectedFilter(opt);
+        fetchPosts(`${BASE_URL}/search_by_date?query=${opt.value}&page=0`);
+    };
 
     const handleTabClick = (tab) => {
         if (tab === activeTab) return;
@@ -27,9 +31,7 @@ const App = () => {
         const query = selectedFilter
             ? selectedFilter.value
             : "angular,react,vue";
-        fetchPosts(
-            `https://hn.algolia.com/api/v1/search_by_date?query=${query}&page=0`
-        );
+        fetchPosts(`${BASE_URL}/search_by_date?query=${query}&page=0`);
     }, []);
 
     return (
