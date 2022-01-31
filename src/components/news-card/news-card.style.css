@@ -17,6 +17,10 @@
     padding: 26px;
 }
 
+.card-left-side a {
+    text-decoration: none;
+}
+
 .card-caption {
     display: flex;
 }
