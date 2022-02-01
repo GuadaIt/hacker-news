@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Post } from "../../models/posts";
 import {
     removeFave,
     addFave,
@@ -7,11 +8,16 @@ import {
 import { dateDistance } from "../../utils/date-distance";
 import "./news-card.style.css";
 
-const NewsCard = ({ data }) => {
-    const { author, story_title, story_url, created_at } = data;
-    const [isFave, setIsFave] = useState(false);
+interface CardProps {
+    data: Post,
+    key: number,
+}
 
-    const handleFave = () => {
+const NewsCard = ({ data }: CardProps) => {
+    const { author, story_title, story_url, created_at } = data;
+    const [isFave, setIsFave] = useState<boolean>(false);
+
+    const handleFave = (): void => {
         isFave ? removeFave(data) : addFave(data);
         setIsFave(!isFave);
     };
@@ -20,7 +26,7 @@ const NewsCard = ({ data }) => {
         const faves = getLocalStorageFaves();
 
         if (faves) {
-            faves.forEach((fave) => {
+            faves.forEach((fave: Post) => {
                 if (fave.story_title === story_title) {
                     setIsFave(true);
                 }

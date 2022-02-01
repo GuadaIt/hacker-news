@@ -7,26 +7,29 @@ import Loader from "./components/loader/loader";
 import { cleanPostsData } from "./utils/clean-post-data";
 import { BASE_URL } from "./constants/config";
 import { getLocalStorageFaves } from "./utils/check-faves";
+import { Filter } from "./models/filter";
+import { Post } from "./models/posts";
+import { Pagination } from "./models/pagination";
 
 const App = () => {
-    const [selectedFilter, setSelectedFilter] = useState(null);
-    const [activeTab, setActiveTab] = useState(1);
-    const [posts, setPosts] = useState(null);
-    const [faves, setFaves] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [postsPagination, setPaginationPosts] = useState({
+    const [selectedFilter, setSelectedFilter] = useState<Filter | null>(null);
+    const [activeTab, setActiveTab] = useState<number>(1);
+    const [posts, setPosts] = useState<Post[]>([]);
+    const [faves, setFaves] = useState<Post[]>();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [postsPagination, setPaginationPosts] = useState<Pagination>({
         current_page: null,
-        total_pages: null,
+        total_pages: 0,
         per_page: null,
     });
 
-    const handleSelect = (opt) => {
+    const handleSelect = (opt: Filter) => {
         setSelectedFilter(opt);
         localStorage.setItem("__HN-APP__filter__", JSON.stringify(opt));
         fetchPosts(`${BASE_URL}/search_by_date?query=${opt.value}&page=0`);
     };
 
-    const handleTabClick = (tab) => {
+    const handleTabClick = (tab: number) => {
         if (tab === activeTab) return;
         if (tab === 2) {
             setFaves(getLocalStorageFaves());
@@ -34,7 +37,7 @@ const App = () => {
         setActiveTab(tab);
     };
 
-    const handlePageClick = (event) => {
+    const handlePageClick = (event: { selected: number }) => {
         const query = selectedFilter
             ? selectedFilter.value
             : "angular,react,vue";
@@ -43,7 +46,7 @@ const App = () => {
         );
     };
 
-    const fetchPosts = async (url) => {
+    const fetchPosts = async (url: string) => {
         setIsLoading(true);
         const response = await fetch(url);
         const data = await response.json();
@@ -58,14 +61,20 @@ const App = () => {
     };
 
     useEffect(() => {
-        const filter = localStorage.getItem("__HN-APP__filter__");
-        const parsedFilter = JSON.parse(filter);
+        const filter: string | null =
+            localStorage.getItem("__HN-APP__filter__");
 
-        setSelectedFilter(parsedFilter);
+        if (filter) {
+            const parsedFilter = JSON.parse(filter);
 
-        const query = parsedFilter ? parsedFilter.value : "angular,react,vue";
+            setSelectedFilter(parsedFilter);
 
-        fetchPosts(`${BASE_URL}/search_by_date?query=${query}&page=0`);
+            const query = parsedFilter
+                ? parsedFilter.value
+                : "angular,react,vue";
+
+            fetchPosts(`${BASE_URL}/search_by_date?query=${query}&page=0`);
+        }
     }, [activeTab]);
 
     return (
@@ -110,7 +119,10 @@ const App = () => {
                         <Loader />
                     ) : activeTab === 1 ? (
                         posts?.map((post, i) => (
-                            <NewsCard data={post} key={i} />
+                            <>
+                                <h1>i</h1>
+                                <NewsCard data={post} key={i} />
+                            </>
                         ))
                     ) : (
                         faves?.map((post, i) => (
@@ -127,7 +139,7 @@ const App = () => {
                         pageRangeDisplayed={5}
                         pageCount={postsPagination.total_pages}
                         previousLabel="<"
-                        renderOnZeroPageCount={null}
+                        renderOnZeroPageCount={() => {}}
                         containerClassName="pagination-container"
                         pageClassName="pagination-item"
                         activeClassName="pagination-active"

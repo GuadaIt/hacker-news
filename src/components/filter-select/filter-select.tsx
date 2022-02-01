@@ -1,13 +1,19 @@
 import { useState } from "react";
 import "./filter-select.style.css";
 import { filterOptions } from "../../constants/filter";
+import { Filter } from "../../models/filter";
 
-const FilterSelect = ({ filter, onselect }) => {
-    const [isOpen, setIsOpen] = useState(false);
+interface FilterProps {
+    filter: Filter | null;
+    onselect: (opt: Filter) => void;
+}
 
-    const toggle = () => setIsOpen(!isOpen);
+const FilterSelect = ({ filter, onselect }: FilterProps) => {
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
-    const handleOptSelected = (opt) => {
+    const toggle = (): void => setIsOpen(!isOpen);
+
+    const handleOptSelected = (opt: Filter): void => {
         onselect(opt);
         toggle();
     };
