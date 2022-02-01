@@ -14,6 +14,7 @@ const App = () => {
 
     const handleSelect = (opt) => {
         setSelectedFilter(opt);
+        localStorage.setItem("__HN-APP__filter__", JSON.stringify(opt));
         fetchPosts(`${BASE_URL}/search_by_date?query=${opt.value}&page=0`);
     };
 
@@ -32,9 +33,13 @@ const App = () => {
     };
 
     useEffect(() => {
-        const query = selectedFilter
-            ? selectedFilter.value
-            : "angular,react,vue";
+        const filter = localStorage.getItem("__HN-APP__filter__");
+        const parsedFilter = JSON.parse(filter);
+
+        setSelectedFilter(parsedFilter);
+
+        const query = parsedFilter ? parsedFilter.value : "angular,react,vue";
+
         fetchPosts(`${BASE_URL}/search_by_date?query=${query}&page=0`);
     }, []);
 
