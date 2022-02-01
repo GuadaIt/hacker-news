@@ -38,6 +38,7 @@
     margin: 0;
     color: #767676;
     font-size: 11px;
+    text-transform: capitalize;
 }
 
 .card-desc {

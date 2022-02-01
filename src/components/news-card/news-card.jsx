@@ -5,6 +5,7 @@ import {
     addFave,
     getLocalStorageFaves,
 } from "../../utils/check-faves";
+import { dateDistance } from "../../utils/date-distance";
 import "./news-card.style.css";
 
 const NewsCard = ({ data }) => {
@@ -39,7 +40,7 @@ const NewsCard = ({ data }) => {
                             width="15px"
                         />
                         <p>
-                            {created_at} by {author}
+                            {dateDistance(created_at)} by {author}
                         </p>
                     </div>
                     <p className="card-desc">{story_title}</p>
