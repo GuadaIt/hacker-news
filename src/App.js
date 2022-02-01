@@ -5,11 +5,13 @@ import NewsCard from "./components/news-card/news-card";
 import Loader from "./components/loader/loader";
 import { cleanPostsData } from "./utils/clean-post-data";
 import { BASE_URL } from "./constants/config";
+import { getLocalStorageFaves } from "./utils/check-faves";
 
 const App = () => {
     const [selectedFilter, setSelectedFilter] = useState(null);
     const [activeTab, setActiveTab] = useState(1);
     const [posts, setPosts] = useState(null);
+    const [faves, setFaves] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSelect = (opt) => {
@@ -20,6 +22,9 @@ const App = () => {
 
     const handleTabClick = (tab) => {
         if (tab === activeTab) return;
+        if (tab === 2) {
+            setFaves(getLocalStorageFaves());
+        }
         setActiveTab(tab);
     };
 
@@ -79,9 +84,9 @@ const App = () => {
                     {isLoading ? (
                         <Loader />
                     ) : (
-                        posts?.map((post) => (
-                            <NewsCard data={post} key={post.story_id} />
-                        ))
+                        (activeTab === 1 ? posts : faves)?.map((post, i) => (
+                            <NewsCard data={post} key={i} />
+                        )) 
                     )}
                 </section>
             </main>

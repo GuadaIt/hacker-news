@@ -8,7 +8,7 @@ import {
 import "./news-card.style.css";
 
 const NewsCard = ({ data }) => {
-    const { author, story_title, story_url, created_at, story_id } = data;
+    const { author, story_title, story_url, created_at } = data;
     const [isFave, setIsFave] = useState(false);
 
     const handleFave = () => {
@@ -21,10 +21,11 @@ const NewsCard = ({ data }) => {
 
         if (faves) {
             faves.map((fave) => {
-                return setIsFave(fave.story_id === story_id);
+                if (fave.story_title === story_title) setIsFave(true);
+                return "";
             });
         }
-    }, []);
+    }, [story_title]);
 
     return (
         <article className="news-card">
