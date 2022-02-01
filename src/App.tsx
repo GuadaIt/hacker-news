@@ -119,10 +119,7 @@ const App = () => {
                         <Loader />
                     ) : activeTab === 1 ? (
                         posts?.map((post, i) => (
-                            <>
-                                <h1>i</h1>
-                                <NewsCard data={post} key={i} />
-                            </>
+                            <NewsCard data={post} key={i} />
                         ))
                     ) : (
                         faves?.map((post, i) => (
@@ -139,7 +136,6 @@ const App = () => {
                         pageRangeDisplayed={5}
                         pageCount={postsPagination.total_pages}
                         previousLabel="<"
-                        renderOnZeroPageCount={() => {}}
                         containerClassName="pagination-container"
                         pageClassName="pagination-item"
                         activeClassName="pagination-active"
