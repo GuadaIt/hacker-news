@@ -5,6 +5,7 @@ export const cleanPostsData = (posts) => {
             story_title: post.story_title,
             story_url: post.story_url,
             created_at: post.created_at,
+            story_id: post.story_id
         };
     });
 

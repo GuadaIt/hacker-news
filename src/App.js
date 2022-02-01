@@ -79,8 +79,8 @@ const App = () => {
                     {isLoading ? (
                         <Loader />
                     ) : (
-                        posts?.map((post, i) => (
-                            <NewsCard data={post} key={i} />
+                        posts?.map((post) => (
+                            <NewsCard data={post} key={post.story_id} />
                         ))
                     )}
                 </section>
