@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Roboto&display=swap");
+
 #root {
     height: 100%;
 }
@@ -5,6 +7,7 @@
 .app {
     background-color: #fcfcfc;
     height: 100%;
+    font-family: 'Roboto', sans-serif;
 }
 
 .app__header {
@@ -22,6 +25,8 @@
     text-transform: uppercase;
     color: #3b3b3b;
     margin: 0;
+    font-family: 'Libre Baskerville', serif;
+    font-weight: inherit;
 }
 
 .app__main {
