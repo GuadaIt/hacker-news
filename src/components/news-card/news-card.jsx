@@ -20,9 +20,10 @@ const NewsCard = ({ data }) => {
         const faves = getLocalStorageFaves();
 
         if (faves) {
-            faves.map((fave) => {
-                if (fave.story_title === story_title) setIsFave(true);
-                return "";
+            faves.forEach((fave) => {
+                if (fave.story_title === story_title) {
+                    setIsFave(true);
+                }
             });
         }
     }, [story_title]);

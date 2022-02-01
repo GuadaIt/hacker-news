@@ -1,5 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
+import ReactPaginate from "react-paginate";
 import FilterSelect from "./components/filter-select/filter-select";
 import NewsCard from "./components/news-card/news-card";
 import Loader from "./components/loader/loader";
@@ -13,6 +14,11 @@ const App = () => {
     const [posts, setPosts] = useState(null);
     const [faves, setFaves] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [postsPagination, setPaginationPosts] = useState({
+        current_page: null,
+        total_pages: null,
+        per_page: null,
+    });
 
     const handleSelect = (opt) => {
         setSelectedFilter(opt);
@@ -28,12 +34,26 @@ const App = () => {
         setActiveTab(tab);
     };
 
+    const handlePageClick = (event) => {
+        const query = selectedFilter
+            ? selectedFilter.value
+            : "angular,react,vue";
+        fetchPosts(
+            `${BASE_URL}/search_by_date?query=${query}&page=${event.selected}`
+        );
+    };
+
     const fetchPosts = async (url) => {
         setIsLoading(true);
         const response = await fetch(url);
         const data = await response.json();
         const cleanData = cleanPostsData(data.hits);
         setIsLoading(false);
+        setPaginationPosts({
+            current_page: data.page,
+            total_pages: data.nbPages,
+            per_page: data.hitsPerPage,
+        });
         setPosts(cleanData);
     };
 
@@ -46,7 +66,7 @@ const App = () => {
         const query = parsedFilter ? parsedFilter.value : "angular,react,vue";
 
         fetchPosts(`${BASE_URL}/search_by_date?query=${query}&page=0`);
-    }, []);
+    }, [activeTab]);
 
     return (
         <div className="app">
@@ -78,17 +98,43 @@ const App = () => {
                     </p>
                 </div>
 
-                <FilterSelect filter={selectedFilter} onselect={handleSelect} />
+                {activeTab === 1 && (
+                    <FilterSelect
+                        filter={selectedFilter}
+                        onselect={handleSelect}
+                    />
+                )}
 
                 <section className="cards-container">
                     {isLoading ? (
                         <Loader />
-                    ) : (
-                        (activeTab === 1 ? posts : faves)?.map((post, i) => (
+                    ) : activeTab === 1 ? (
+                        posts?.map((post, i) => (
                             <NewsCard data={post} key={i} />
-                        )) 
+                        ))
+                    ) : (
+                        faves?.map((post, i) => (
+                            <NewsCard data={post} key={i} />
+                        ))
                     )}
                 </section>
+
+                {activeTab === 1 && !isLoading && (
+                    <ReactPaginate
+                        breakLabel="..."
+                        nextLabel=">"
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={5}
+                        pageCount={postsPagination.total_pages}
+                        previousLabel="<"
+                        renderOnZeroPageCount={null}
+                        containerClassName="pagination-container"
+                        pageClassName="pagination-item"
+                        activeClassName="pagination-active"
+                        previousClassName="pagination-item"
+                        nextClassName="pagination-item"
+                    />
+                )}
             </main>
         </div>
     );
