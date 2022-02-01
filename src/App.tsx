@@ -19,7 +19,7 @@ const App = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [postsPagination, setPaginationPosts] = useState<Pagination>({
         current_page: null,
-        total_pages: 0,
+        total_pages: null,
         per_page: null,
     });
 
@@ -134,7 +134,8 @@ const App = () => {
                         nextLabel=">"
                         onPageChange={handlePageClick}
                         pageRangeDisplayed={5}
-                        pageCount={postsPagination.total_pages}
+                        pageCount={postsPagination.total_pages || 0}
+                        forcePage={postsPagination.current_page || 0}
                         previousLabel="<"
                         containerClassName="pagination-container"
                         pageClassName="pagination-item"
