@@ -64,17 +64,17 @@ const App = () => {
         const filter: string | null =
             localStorage.getItem("__HN-APP__filter__");
 
+        let parsedFilter;
+
         if (filter) {
-            const parsedFilter = JSON.parse(filter);
-
-            setSelectedFilter(parsedFilter);
-
-            const query = parsedFilter
-                ? parsedFilter.value
-                : "angular,react,vue";
-
-            fetchPosts(`${BASE_URL}/search_by_date?query=${query}&page=0`);
+            parsedFilter = JSON.parse(filter);
         }
+
+        setSelectedFilter(parsedFilter);
+
+        const query = parsedFilter ? parsedFilter.value : "angular,react,vue";
+
+        fetchPosts(`${BASE_URL}/search_by_date?query=${query}&page=0`);
     }, [activeTab]);
 
     return (
