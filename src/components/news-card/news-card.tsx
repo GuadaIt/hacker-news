@@ -10,7 +10,6 @@ import "./news-card.style.css";
 
 interface CardProps {
     data: Post,
-    key: number,
 }
 
 const NewsCard = ({ data }: CardProps) => {
